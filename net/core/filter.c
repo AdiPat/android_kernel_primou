@@ -134,19 +134,31 @@ unsigned int sk_run_filter(const struct sk_buff *skb,
 			A += X;
 			continue;
 		case BPF_S_ALU_ADD_K:
+<<<<<<< HEAD
 			A += K;
+=======
+			A += f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_SUB_X:
 			A -= X;
 			continue;
 		case BPF_S_ALU_SUB_K:
+<<<<<<< HEAD
 			A -= K;
+=======
+			A -= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_MUL_X:
 			A *= X;
 			continue;
 		case BPF_S_ALU_MUL_K:
+<<<<<<< HEAD
 			A *= K;
+=======
+			A *= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_DIV_X:
 			if (X == 0)
@@ -154,36 +166,57 @@ unsigned int sk_run_filter(const struct sk_buff *skb,
 			A /= X;
 			continue;
 		case BPF_S_ALU_DIV_K:
+<<<<<<< HEAD
 			A = reciprocal_divide(A, K);
+=======
+			A /= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_AND_X:
 			A &= X;
 			continue;
 		case BPF_S_ALU_AND_K:
+<<<<<<< HEAD
 			A &= K;
+=======
+			A &= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_OR_X:
 			A |= X;
 			continue;
 		case BPF_S_ALU_OR_K:
+<<<<<<< HEAD
 			A |= K;
+=======
+			A |= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_LSH_X:
 			A <<= X;
 			continue;
 		case BPF_S_ALU_LSH_K:
+<<<<<<< HEAD
 			A <<= K;
+=======
+			A <<= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_RSH_X:
 			A >>= X;
 			continue;
 		case BPF_S_ALU_RSH_K:
+<<<<<<< HEAD
 			A >>= K;
+=======
+			A >>= f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ALU_NEG:
 			A = -A;
 			continue;
 		case BPF_S_JMP_JA:
+<<<<<<< HEAD
 			fentry += K;
 			continue;
 		case BPF_S_JMP_JGT_K:
@@ -212,31 +245,77 @@ unsigned int sk_run_filter(const struct sk_buff *skb,
 			continue;
 		case BPF_S_LD_W_ABS:
 			k = K;
+=======
+			pc += f_k;
+			continue;
+		case BPF_S_JMP_JGT_K:
+			pc += (A > f_k) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JGE_K:
+			pc += (A >= f_k) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JEQ_K:
+			pc += (A == f_k) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JSET_K:
+			pc += (A & f_k) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JGT_X:
+			pc += (A > X) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JGE_X:
+			pc += (A >= X) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JEQ_X:
+			pc += (A == X) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_JMP_JSET_X:
+			pc += (A & X) ? fentry->jt : fentry->jf;
+			continue;
+		case BPF_S_LD_W_ABS:
+			k = f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 load_w:
 			ptr = load_pointer(skb, k, 4, &tmp);
 			if (ptr != NULL) {
 				A = get_unaligned_be32(ptr);
 				continue;
 			}
+<<<<<<< HEAD
 			return 0;
 		case BPF_S_LD_H_ABS:
 			k = K;
+=======
+			break;
+		case BPF_S_LD_H_ABS:
+			k = f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 load_h:
 			ptr = load_pointer(skb, k, 2, &tmp);
 			if (ptr != NULL) {
 				A = get_unaligned_be16(ptr);
 				continue;
 			}
+<<<<<<< HEAD
 			return 0;
 		case BPF_S_LD_B_ABS:
 			k = K;
+=======
+			break;
+		case BPF_S_LD_B_ABS:
+			k = f_k;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 load_b:
 			ptr = load_pointer(skb, k, 1, &tmp);
 			if (ptr != NULL) {
 				A = *(u8 *)ptr;
 				continue;
 			}
+<<<<<<< HEAD
 			return 0;
+=======
+			break;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 		case BPF_S_LD_W_LEN:
 			A = skb->len;
 			continue;
@@ -244,6 +323,7 @@ load_b:
 			X = skb->len;
 			continue;
 		case BPF_S_LD_W_IND:
+<<<<<<< HEAD
 			k = X + K;
 			goto load_w;
 		case BPF_S_LD_H_IND:
@@ -254,12 +334,25 @@ load_b:
 			goto load_b;
 		case BPF_S_LDX_B_MSH:
 			ptr = load_pointer(skb, K, 1, &tmp);
+=======
+			k = X + f_k;
+			goto load_w;
+		case BPF_S_LD_H_IND:
+			k = X + f_k;
+			goto load_h;
+		case BPF_S_LD_B_IND:
+			k = X + f_k;
+			goto load_b;
+		case BPF_S_LDX_B_MSH:
+			ptr = load_pointer(skb, f_k, 1, &tmp);
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			if (ptr != NULL) {
 				X = (*(u8 *)ptr & 0xf) << 2;
 				continue;
 			}
 			return 0;
 		case BPF_S_LD_IMM:
+<<<<<<< HEAD
 			A = K;
 			continue;
 		case BPF_S_LDX_IMM:
@@ -270,6 +363,20 @@ load_b:
 			continue;
 		case BPF_S_LDX_MEM:
 			X = mem[K];
+=======
+			A = f_k;
+			continue;
+		case BPF_S_LDX_IMM:
+			X = f_k;
+			continue;
+		case BPF_S_LD_MEM:
+			A = (memvalid & (1UL << f_k)) ?
+				mem[f_k] : 0;
+			continue;
+		case BPF_S_LDX_MEM:
+			X = (memvalid & (1UL << f_k)) ?
+				mem[f_k] : 0;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_MISC_TAX:
 			X = A;
@@ -278,6 +385,7 @@ load_b:
 			A = X;
 			continue;
 		case BPF_S_RET_K:
+<<<<<<< HEAD
 			return K;
 		case BPF_S_RET_A:
 			return A;
@@ -286,6 +394,18 @@ load_b:
 			continue;
 		case BPF_S_STX:
 			mem[K] = X;
+=======
+			return f_k;
+		case BPF_S_RET_A:
+			return A;
+		case BPF_S_ST:
+			memvalid |= 1UL << f_k;
+			mem[f_k] = A;
+			continue;
+		case BPF_S_STX:
+			memvalid |= 1UL << f_k;
+			mem[f_k] = X;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			continue;
 		case BPF_S_ANC_PROTOCOL:
 			A = ntohs(skb->protocol);
@@ -496,8 +616,108 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 
 	/* check the filter code now */
 	for (pc = 0; pc < flen; pc++) {
+<<<<<<< HEAD
 		struct sock_filter *ftest = &filter[pc];
 		u16 code = ftest->code;
+=======
+		ftest = &filter[pc];
+
+		/* Only allow valid instructions */
+		switch (ftest->code) {
+		case BPF_ALU|BPF_ADD|BPF_K:
+			ftest->code = BPF_S_ALU_ADD_K;
+			break;
+		case BPF_ALU|BPF_ADD|BPF_X:
+			ftest->code = BPF_S_ALU_ADD_X;
+			break;
+		case BPF_ALU|BPF_SUB|BPF_K:
+			ftest->code = BPF_S_ALU_SUB_K;
+			break;
+		case BPF_ALU|BPF_SUB|BPF_X:
+			ftest->code = BPF_S_ALU_SUB_X;
+			break;
+		case BPF_ALU|BPF_MUL|BPF_K:
+			ftest->code = BPF_S_ALU_MUL_K;
+			break;
+		case BPF_ALU|BPF_MUL|BPF_X:
+			ftest->code = BPF_S_ALU_MUL_X;
+			break;
+		case BPF_ALU|BPF_DIV|BPF_X:
+			ftest->code = BPF_S_ALU_DIV_X;
+			break;
+		case BPF_ALU|BPF_AND|BPF_K:
+			ftest->code = BPF_S_ALU_AND_K;
+			break;
+		case BPF_ALU|BPF_AND|BPF_X:
+			ftest->code = BPF_S_ALU_AND_X;
+			break;
+		case BPF_ALU|BPF_OR|BPF_K:
+			ftest->code = BPF_S_ALU_OR_K;
+			break;
+		case BPF_ALU|BPF_OR|BPF_X:
+			ftest->code = BPF_S_ALU_OR_X;
+			break;
+		case BPF_ALU|BPF_LSH|BPF_K:
+			ftest->code = BPF_S_ALU_LSH_K;
+			break;
+		case BPF_ALU|BPF_LSH|BPF_X:
+			ftest->code = BPF_S_ALU_LSH_X;
+			break;
+		case BPF_ALU|BPF_RSH|BPF_K:
+			ftest->code = BPF_S_ALU_RSH_K;
+			break;
+		case BPF_ALU|BPF_RSH|BPF_X:
+			ftest->code = BPF_S_ALU_RSH_X;
+			break;
+		case BPF_ALU|BPF_NEG:
+			ftest->code = BPF_S_ALU_NEG;
+			break;
+		case BPF_LD|BPF_W|BPF_ABS:
+			ftest->code = BPF_S_LD_W_ABS;
+			break;
+		case BPF_LD|BPF_H|BPF_ABS:
+			ftest->code = BPF_S_LD_H_ABS;
+			break;
+		case BPF_LD|BPF_B|BPF_ABS:
+			ftest->code = BPF_S_LD_B_ABS;
+			break;
+		case BPF_LD|BPF_W|BPF_LEN:
+			ftest->code = BPF_S_LD_W_LEN;
+			break;
+		case BPF_LD|BPF_W|BPF_IND:
+			ftest->code = BPF_S_LD_W_IND;
+			break;
+		case BPF_LD|BPF_H|BPF_IND:
+			ftest->code = BPF_S_LD_H_IND;
+			break;
+		case BPF_LD|BPF_B|BPF_IND:
+			ftest->code = BPF_S_LD_B_IND;
+			break;
+		case BPF_LD|BPF_IMM:
+			ftest->code = BPF_S_LD_IMM;
+			break;
+		case BPF_LDX|BPF_W|BPF_LEN:
+			ftest->code = BPF_S_LDX_W_LEN;
+			break;
+		case BPF_LDX|BPF_B|BPF_MSH:
+			ftest->code = BPF_S_LDX_B_MSH;
+			break;
+		case BPF_LDX|BPF_IMM:
+			ftest->code = BPF_S_LDX_IMM;
+			break;
+		case BPF_MISC|BPF_TAX:
+			ftest->code = BPF_S_MISC_TAX;
+			break;
+		case BPF_MISC|BPF_TXA:
+			ftest->code = BPF_S_MISC_TXA;
+			break;
+		case BPF_RET|BPF_K:
+			ftest->code = BPF_S_RET_K;
+			break;
+		case BPF_RET|BPF_A:
+			ftest->code = BPF_S_RET_A;
+			break;
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 
 		if (code >= ARRAY_SIZE(codes))
 			return -EINVAL;
@@ -505,11 +725,17 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 		if (!code)
 			return -EINVAL;
 		/* Some instructions need special checks */
+<<<<<<< HEAD
 		switch (code) {
 		case BPF_S_ALU_DIV_K:
+=======
+
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			/* check for division by zero */
+		case BPF_ALU|BPF_DIV|BPF_K:
 			if (ftest->k == 0)
 				return -EINVAL;
+<<<<<<< HEAD
 			ftest->k = reciprocal_value(ftest->k);
 			break;
 		case BPF_S_LD_MEM:
@@ -517,8 +743,31 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 		case BPF_S_ST:
 		case BPF_S_STX:
 			/* check for invalid memory addresses */
+=======
+			ftest->code = BPF_S_ALU_DIV_K;
+			break;
+
+		/* check for invalid memory addresses */
+		case BPF_LD|BPF_MEM:
 			if (ftest->k >= BPF_MEMWORDS)
 				return -EINVAL;
+			ftest->code = BPF_S_LD_MEM;
+			break;
+		case BPF_LDX|BPF_MEM:
+			if (ftest->k >= BPF_MEMWORDS)
+				return -EINVAL;
+			ftest->code = BPF_S_LDX_MEM;
+			break;
+		case BPF_ST:
+			if (ftest->k >= BPF_MEMWORDS)
+				return -EINVAL;
+			ftest->code = BPF_S_ST;
+			break;
+		case BPF_STX:
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
+			if (ftest->k >= BPF_MEMWORDS)
+				return -EINVAL;
+			ftest->code = BPF_S_STX;
 			break;
 		case BPF_S_JMP_JA:
 			/*
@@ -528,7 +777,9 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 			 */
 			if (ftest->k >= (unsigned)(flen-pc-1))
 				return -EINVAL;
+			ftest->code = BPF_S_JMP_JA;
 			break;
+<<<<<<< HEAD
 		case BPF_S_JMP_JEQ_K:
 		case BPF_S_JMP_JEQ_X:
 		case BPF_S_JMP_JGE_K:
@@ -537,10 +788,52 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 		case BPF_S_JMP_JGT_X:
 		case BPF_S_JMP_JSET_X:
 		case BPF_S_JMP_JSET_K:
+=======
+
+		case BPF_JMP|BPF_JEQ|BPF_K:
+			ftest->code = BPF_S_JMP_JEQ_K;
+			break;
+		case BPF_JMP|BPF_JEQ|BPF_X:
+			ftest->code = BPF_S_JMP_JEQ_X;
+			break;
+		case BPF_JMP|BPF_JGE|BPF_K:
+			ftest->code = BPF_S_JMP_JGE_K;
+			break;
+		case BPF_JMP|BPF_JGE|BPF_X:
+			ftest->code = BPF_S_JMP_JGE_X;
+			break;
+		case BPF_JMP|BPF_JGT|BPF_K:
+			ftest->code = BPF_S_JMP_JGT_K;
+			break;
+		case BPF_JMP|BPF_JGT|BPF_X:
+			ftest->code = BPF_S_JMP_JGT_X;
+			break;
+		case BPF_JMP|BPF_JSET|BPF_K:
+			ftest->code = BPF_S_JMP_JSET_K;
+			break;
+		case BPF_JMP|BPF_JSET|BPF_X:
+			ftest->code = BPF_S_JMP_JSET_X;
+			break;
+
+		default:
+			return -EINVAL;
+		}
+
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 			/* for conditionals both must be safe */
+		switch (ftest->code) {
+		case BPF_S_JMP_JEQ_K:
+		case BPF_S_JMP_JEQ_X:
+		case BPF_S_JMP_JGE_K:
+		case BPF_S_JMP_JGE_X:
+		case BPF_S_JMP_JGT_K:
+		case BPF_S_JMP_JGT_X:
+		case BPF_S_JMP_JSET_X:
+		case BPF_S_JMP_JSET_K:
 			if (pc + ftest->jt + 1 >= flen ||
 			    pc + ftest->jf + 1 >= flen)
 				return -EINVAL;
+<<<<<<< HEAD
 			break;
 		case BPF_S_LD_W_ABS:
 		case BPF_S_LD_H_ABS:
@@ -571,6 +864,20 @@ int sk_chk_filter(struct sock_filter *filter, int flen)
 		return check_load_and_stores(filter, flen);
 	}
 	return -EINVAL;
+=======
+		}
+	}
+
+	/* last instruction must be a RET code */
+	switch (filter[flen - 1].code) {
+	case BPF_S_RET_K:
+	case BPF_S_RET_A:
+		return 0;
+		break;
+		default:
+			return -EINVAL;
+		}
+>>>>>>> ed0d933... net: optimize Berkeley Packet Filter (BPF) processing
 }
 EXPORT_SYMBOL(sk_chk_filter);
 
