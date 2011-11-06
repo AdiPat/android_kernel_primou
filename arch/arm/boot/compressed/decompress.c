@@ -44,7 +44,19 @@ extern void error(char *);
 #include "../../../../lib/decompress_unlzma.c"
 #endif
 
+<<<<<<< HEAD
 int do_decompress(u8 *input, int len, u8 *output, void (*error)(char *x))
+=======
+#ifdef CONFIG_KERNEL_LZO
+#include "../../../../lib/decompress_unlzo.c"
+#endif
+
+#ifdef CONFIG_KERNEL_XZ
+#include "../../../../lib/decompress_unxz.c"
+#endif
+
+void do_decompress(u8 *input, int len, u8 *output, void (*error)(char *x))
+>>>>>>> b5ee5cb... ARM: support XZ compressed kernels
 {
 	return decompress(input, len, NULL, NULL, output, NULL, error);
 }

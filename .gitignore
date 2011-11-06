@@ -28,8 +28,13 @@ modules.builtin
 *.gz
 *.bz2
 *.lzma
+<<<<<<< HEAD
 *.xz
 *.lzo
+=======
+*.xzkern
+*.xz
+>>>>>>> b5ee5cb... ARM: support XZ compressed kernels
 *.patch
 *.gcno
 *.patch
