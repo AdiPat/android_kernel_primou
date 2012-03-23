@@ -222,6 +222,7 @@ static int __cpuinit msm_cpufreq_init(struct cpufreq_policy *policy)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int msm_cpufreq_suspend(void)
 {
 	int cpu;
@@ -284,6 +285,12 @@ static struct freq_attr *msm_freq_attr[] = {
 	&cpufreq_freq_attr_scaling_available_freqs,
 	NULL,
 };
+=======
+static struct freq_attr *msm_cpufreq_attr[] = {  
+        &cpufreq_freq_attr_scaling_available_freqs,  
+        NULL,
+};  
+>>>>>>> 65f1a8d... cpufreq: Export scaling_available_frequencies attr in /sys
 
 static struct cpufreq_driver msm_cpufreq_driver = {
 	/* lps calculations are handled here. */
@@ -292,11 +299,15 @@ static struct cpufreq_driver msm_cpufreq_driver = {
 	.verify		= msm_cpufreq_verify,
 	.target		= msm_cpufreq_target,
 	.name		= "msm",
+<<<<<<< HEAD
 	.attr		= msm_freq_attr,
 };
 
 static struct notifier_block msm_cpufreq_pm_notifier = {
 	.notifier_call = msm_cpufreq_pm_event,
+=======
+       .attr    = msm_cpufreq_attr,
+>>>>>>> 65f1a8d... cpufreq: Export scaling_available_frequencies attr in /sys
 };
 
 static int __init msm_cpufreq_register(void)
