@@ -560,7 +560,6 @@ static ssize_t show_scaling_setspeed(struct cpufreq_policy *policy, char *buf)
 	return policy->governor->show_setspeed(policy, buf);
 }
 
-<<<<<<< HEAD
 /**
  * show_scaling_driver - show the current cpufreq HW/BIOS limitation
  */
@@ -590,7 +589,7 @@ cpufreq_freq_attr_rw(scaling_min_freq);
 cpufreq_freq_attr_rw(scaling_max_freq);
 cpufreq_freq_attr_rw(scaling_governor);
 cpufreq_freq_attr_rw(scaling_setspeed);
-=======
+
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
 extern ssize_t acpuclk_get_vdd_levels_str(char *buf);
 static ssize_t show_vdd_levels(struct cpufreq_policy *policy, char *buf)
@@ -684,7 +683,6 @@ define_one_rw(scaling_setspeed);
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
 define_one_rw(vdd_levels);
 #endif
->>>>>>> 483c4c8... cpufreq: added VDD sysfs interface
 
 static struct attribute *default_attrs[] = {
 	&cpuinfo_min_freq.attr,

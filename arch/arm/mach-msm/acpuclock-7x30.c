@@ -507,11 +507,9 @@ static int __init acpuclk_7x30_init(struct acpuclk_soc_data *soc_data)
 	return 0;
 }
 
-<<<<<<< HEAD
 struct acpuclk_soc_data acpuclk_7x30_soc_data __initdata = {
 	.init = acpuclk_7x30_init,
 };
-=======
 #ifdef CONFIG_CPU_FREQ_VDD_LEVELS
 ssize_t acpuclk_get_vdd_levels_str(char *buf)
 {
@@ -554,4 +552,3 @@ void acpuclk_set_vdd(unsigned int khz, int vdd)
 	mutex_unlock(&drv_state.lock);
 }
 #endif
->>>>>>> 483c4c8... cpufreq: added VDD sysfs interface
