@@ -5,25 +5,12 @@
 
 #define ENTRIES_PER_LINE 4
 
-<<<<<<< HEAD
 #if CRC_LE_BITS > 8
 # define LE_TABLE_ROWS (CRC_LE_BITS/8)
 # define LE_TABLE_SIZE 256
 #else
 # define LE_TABLE_ROWS 1
 # define LE_TABLE_SIZE (1 << CRC_LE_BITS)
-=======
-#if CRC_LE_BITS <= 8
-#define LE_TABLE_SIZE (1 << CRC_LE_BITS)
-#else
-#define LE_TABLE_SIZE 256
-#endif
-
-#if CRC_BE_BITS <= 8
-#define BE_TABLE_SIZE (1 << CRC_BE_BITS)
-#else
-#define BE_TABLE_SIZE 256
->>>>>>> f5ee5ef... crc32: add real 8 bit
 #endif
 
 #if CRC_BE_BITS > 8
@@ -54,11 +41,7 @@ static void crc32init_le_generic(const uint32_t polynomial,
 	tab[0][0] = 0;
 
 	for (i = LE_TABLE_SIZE >> 1; i; i >>= 1) {
-<<<<<<< HEAD
 		crc = (crc >> 1) ^ ((crc & 1) ? polynomial : 0);
-=======
-		crc = (crc >> 1) ^ ((crc & 1) ? CRCPOLY_LE : 0);
->>>>>>> f5ee5ef... crc32: add real 8 bit
 		for (j = 0; j < LE_TABLE_SIZE; j += 2 * i)
 			tab[0][i + j] = crc ^ tab[0][j];
 	}

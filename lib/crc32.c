@@ -164,17 +164,9 @@ static inline u32 __pure crc32_le_generic(u32 crc, unsigned char const *p,
 	/* aka Sarwate algorithm */
 	while (len--) {
 		crc ^= *p++;
-<<<<<<< HEAD
 		crc = (crc >> 8) ^ tab[0][crc & 255];
 	}
 # else
-=======
-		crc = (crc >> 8) ^ crc32table_le[0][crc & 255];
-	}
-# else
-	const u32      (*tab)[] = crc32table_le;
-
->>>>>>> f5ee5ef... crc32: add real 8 bit
 	crc = (__force u32) __cpu_to_le32(crc);
 	crc = crc32_body(crc, p, len, tab);
 	crc = __le32_to_cpu((__force __le32)crc);
@@ -231,17 +223,9 @@ static inline u32 __pure crc32_be_generic(u32 crc, unsigned char const *p,
 # elif CRC_BE_BITS == 8
 	while (len--) {
 		crc ^= *p++ << 24;
-<<<<<<< HEAD
 		crc = (crc << 8) ^ tab[0][crc >> 24];
 	}
 # else
-=======
-		crc = (crc << 8) ^ crc32table_be[0][crc >> 24];
-	}
-# else
-	const u32      (*tab)[] = crc32table_be;
-
->>>>>>> f5ee5ef... crc32: add real 8 bit
 	crc = (__force u32) __cpu_to_be32(crc);
 	crc = crc32_body(crc, p, len, tab);
 	crc = __be32_to_cpu((__force __be32)crc);
