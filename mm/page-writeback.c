@@ -737,8 +737,6 @@ static void balance_dirty_pages(struct address_space *mapping,
 		 */
 		trace_balance_dirty_start(bdi);
 		if (bdi_nr_reclaimable > task_bdi_thresh) {
-			pages_written += writeback_inodes_wb(&bdi->wb,
-							     write_chunk);
 			trace_balance_dirty_written(bdi, pages_written);
 			if (pages_written >= write_chunk)
 				break;		/* We've done our duty */
