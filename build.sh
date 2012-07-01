@@ -1,7 +1,7 @@
 echo "Start Compiling"
-make -j84 clean mrproper
-make -j84 titanium_defconfig 
-make -j110
+make clean mrproper
+make titanium_defconfig 
+make -j`grep 'processor' /proc/cpuinfo | wc -l`
 ./copy.sh 
 echo "Done"
 read ANS
