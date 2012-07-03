@@ -734,15 +734,15 @@ static void balance_dirty_pages(struct address_space *mapping,
 		 * Only move pages to writeback if this bdi is over its
 		 * threshold otherwise wait until the disk writes catch
 		 * up.
-		 */
+		 
 		trace_balance_dirty_start(bdi);
 		if (bdi_nr_reclaimable > task_bdi_thresh) {
 			pages_written += writeback_inodes_wb(&bdi->wb,
 							     write_chunk);
 			trace_balance_dirty_written(bdi, pages_written);
 			if (pages_written >= write_chunk)
-				break;		/* We've done our duty */
-		}
+				break;		
+		} */
 		__set_current_state(TASK_UNINTERRUPTIBLE);
 		io_schedule_timeout(pause);
 		trace_balance_dirty_wait(bdi);
