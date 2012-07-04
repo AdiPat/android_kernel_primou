@@ -7,7 +7,19 @@ cp drivers/net/wireless/bcmdhd/bcmdhd.ko ../boot.img-ramdisk/lib/modules/bcmdhd.
 cp drivers/net/wireless/libra/librasdioif.ko ../boot.img-ramdisk/lib/modules/librasdioif.ko 
 cp drivers/net/kineto_gan.ko ../boot.img-ramdisk/lib/modules/kineto_gan.ko 
 cp drivers/staging/ti-st/fm_drv.ko ../boot.img-ramdisk/lib/modules/fm_drv.ko 
+cp drivers/staging/zram/zram.ko ../out
+cp lib/lzo/lzo_decompress.ko ../out
+cp lib/lzo/lzo_compress.ko ../out
 cd ../boot.img-ramdisk/lib/modules
+
+for i in $(find . | grep .ko | grep './')
+do
+        echo $i
+
+/home/aditya/Toolchain/arm-eabi-4.4.3/bin/arm-eabi-strip --strip-unneeded $i
+done
+
+cd ../out
 
 for i in $(find . | grep .ko | grep './')
 do
