@@ -4366,13 +4366,13 @@ static struct android_pmem_platform_data android_pmem_adsp2_pdata = {
 	.cached = 0,
 	.memory_type = MEMTYPE_EBI1,
 };
-/*
+
 static struct android_pmem_platform_data android_pmem_audio_pdata = {
        .name = "pmem_audio",
        .allocator_type = PMEM_ALLOCATORTYPE_BITMAP,
        .cached = 0,
 	.memory_type = MEMTYPE_EBI1,
-}; */
+};
 
 static struct platform_device android_pmem_adsp_device = {
        .name = "android_pmem",
