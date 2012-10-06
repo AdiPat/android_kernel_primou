@@ -16,6 +16,7 @@
 #include <linux/sched.h>
 #include <linux/list.h>
 #include <linux/slab.h>
+#include <linux/random.h>
 #include <linux/ioctl.h>
 #include <linux/usb.h>
 #include <linux/usbdevice_fs.h>
