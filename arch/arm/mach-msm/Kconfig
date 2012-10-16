@@ -522,6 +522,12 @@ config MACH_PRIMOU
        help
          Support for the Qualcomm Primou board.
 
+config CYANOGENMOD
+       bool "Some Configs for CM"
+       help
+	 Enables settings for CM	
+
+
 config MACH_PRIMOC
        depends on ARCH_MSM7X30
        default n
