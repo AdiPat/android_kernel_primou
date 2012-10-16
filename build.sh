@@ -41,6 +41,10 @@ tools/mkbootfs boot-img-ramdisk-cm10 | gzip > boot.img-ramdisk-cm9.gz
 echo "Pack CM9 boot.img" 
 ./tools/mkbootimg --kernel Kernel/arch/arm/boot/zImage --ramdisk boot.img-ramdisk-cm9.gz -o cm9_boot.img --base 13f00000
 
+cd ..
+
+zip TITANIUM_KERNEL.zip sense_boot.img cm9_boot.img cm10_boot.img README
+
 
 echo "Done"
 read ANS
