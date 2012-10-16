@@ -195,7 +195,7 @@ SUBARCH := arm
 SUBARCH := arm
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?= $(SUBARCH)
-CROSS_COMPILE	?= /home/aditya/Toolchain/arm-eabi-linaro-4.6.2/bin/arm-eabi-
+CROSS_COMPILE	?= ~/Toolchain/arm-eabi-linaro-4.6.2/bin/arm-eabi-
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
 # Architecture as present in compile.h
