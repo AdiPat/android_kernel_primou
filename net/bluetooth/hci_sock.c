@@ -131,17 +131,6 @@ void hci_send_to_sock(struct hci_dev *hdev, struct sk_buff *skb)
 			      get_unaligned((__le16 *)(skb->data + 4)))))
 				continue;
 		}
-
-		if (!skb_copy) {
-			/* Create a private copy with headroom */
-			skb_copy = __pskb_copy(skb, 1, GFP_ATOMIC);
-			if (!skb_copy)
-				continue;
-
-			/* Put type byte before the data */
-			memcpy(skb_push(skb_copy, 1), &bt_cb(skb)->pkt_type, 1);
-		}
-
 		nskb = skb_clone(skb_copy, GFP_ATOMIC);
 		if (!nskb)
 			continue;
@@ -236,20 +225,6 @@ void hci_send_to_monitor(struct hci_dev *hdev, struct sk_buff *skb)
 		if (hci_pi(sk)->channel != HCI_CHANNEL_MONITOR)
 			continue;
 
-		if (!skb_copy) {
-			struct hci_mon_hdr *hdr;
-
-			/* Create a private copy with headroom */
-			skb_copy = __pskb_copy(skb, HCI_MON_HDR_SIZE, GFP_ATOMIC);
-			if (!skb_copy)
-				continue;
-
-			/* Put header before the data */
-			hdr = (void *) skb_push(skb_copy, HCI_MON_HDR_SIZE);
-			hdr->opcode = opcode;
-			hdr->index = cpu_to_le16(hdev->id);
-			hdr->len = cpu_to_le16(skb->len);
-		}
 
 		nskb = skb_clone(skb_copy, GFP_ATOMIC);
 		if (!nskb)
