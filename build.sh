@@ -12,10 +12,12 @@ make titanium_defconfig
 make -j84
 echo "Copy Modules to Sense Ramdisk"
 find -name '*.ko' -exec cp -av {} ../boot.img-ramdisk/lib/modules/ \;
+cd ..
 echo "Pack Sense Ramdisk"
 tools/mkbootfs boot.img-ramdisk | gzip > boot.img-ramdisk-sense.gz
 echo "Pack Sense boot.img"
 ./tools/mkbootimg --kernel Kernel/arch/arm/boot/zImage --ramdisk boot.img-ramdisk-sense.gz -o sense_boot.img --base 13f00000
+cd Kernel
 #############################################################################################################################
 sleep 5 
 #############################################################################################################################
@@ -30,18 +32,17 @@ echo "Pack CM10 Ramdisk"
 tools/mkbootfs boot-img-ramdisk-cm10 | gzip > boot.img-ramdisk-cm10.gz
 echo "Pack CM10 boot.img" 
 ./tools/mkbootimg --kernel Kernel/arch/arm/boot/zImage --ramdisk boot.img-ramdisk-cm10.gz -o cm10_boot.img --base 13f00000
-
+cd Kernel 
 ######## CM10 DONE ####################
 
 echo "Copy Modules to CM9 Ramdisk"
-find -name '*.ko' -exec cp -av {} ../boot-img-ramdisk-cm9/lib/modules/ \;
+find -name '*.ko' -exec cp -av {} ../boot.img-ramdisk-cm9/lib/modules/ \;
 cd ..
 echo "Pack CM9 Ramdisk"
-tools/mkbootfs boot-img-ramdisk-cm10 | gzip > boot.img-ramdisk-cm9.gz
+tools/mkbootfs boot-img-ramdisk-cm9 | gzip > boot.img-ramdisk-cm9.gz
 echo "Pack CM9 boot.img" 
 ./tools/mkbootimg --kernel Kernel/arch/arm/boot/zImage --ramdisk boot.img-ramdisk-cm9.gz -o cm9_boot.img --base 13f00000
 
-cd ..
 
 zip TITANIUM_KERNEL.zip sense_boot.img cm9_boot.img cm10_boot.img README
 
