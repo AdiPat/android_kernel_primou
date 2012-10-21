@@ -39,7 +39,7 @@ echo "Copy Modules to CM9 Ramdisk"
 find -name '*.ko' -exec cp -av {} ../boot.img-ramdisk-cm9/lib/modules/ \;
 cd ..
 echo "Pack CM9 Ramdisk"
-tools/mkbootfs boot-img-ramdisk-cm9 | gzip > boot.img-ramdisk-cm9.gz
+tools/mkbootfs boot.img-ramdisk-cm9 | gzip > boot.img-ramdisk-cm9.gz
 echo "Pack CM9 boot.img" 
 ./tools/mkbootimg --kernel Kernel/arch/arm/boot/zImage --ramdisk boot.img-ramdisk-cm9.gz -o cm9_boot.img --base 13f00000
 
